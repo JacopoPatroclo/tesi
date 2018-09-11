@@ -1,0 +1,22 @@
+\chapter{Applicazioni future}
+\label{cha:intro}
+\vspace{5mm}
+
+Uno degli aspetti principali che hanno portato al refactor di questo progetto è stata quella di renderlo più flessibile ed adattabile ad altri contesti e non solo legato al comune che ha commissionato l’applicativo. Un ulteriore passo in questa direzione è lo sviluppo di un altro applicativo che abbia le funzionalità di un orchestratore. Tale applicativo, anch'esso sviluppato mediante Nodejs sarà in grado di sfruttare a pieno l’alta configurabilità di ogni applicativo che comprende lo stack Alakai, eseguendo in modo automatizzato la configurazione e il deploy di tutti i servizi necessari. Per raggiungere tale scopo è necessario implementare alcuni accorgimenti. I punti che descriverò ora sono delle linee guida generali e non passaggi sequenziali verso un prodotto finito.\vspace{5mm}
+
+Il primo tra questi è possedere un portale dove richiedere all’utente le configurazioni necessarie, come il nome dell’applicativo, se si desidera utilizzare o meno l’Estimote SDK oppure utilizzare il GPS, le Api key di Eventbrite e le chiavi degli store per la firma degli applicativi per IOS e per Android. Una volta ottenute queste informazioni è necessario costruire un manager che, una volta importata la configurazione, esegua un deploy della parte server in Nodejs, trasponga l’applicativo admin in React e lo inserisca all’interno di una directory prestabilita sul server in modo che possa essere servito staticamente e infine compili e firmi i due applicativi per Android e IOS. Le problematiche da risolvere per raggiungere un prodotto di questo tipo sono molteplici, ne discuterò solo alcune.\vspace{5mm}
+
+E’ necessario possedere un ambiente in grado di ospitare un applicativo in Nodejs e servire mediante un proxyPass sia l’applicativo in React sia le Api sullo stesso dominio. Per fare questo è necessario che la macchina abbia installata una versione di Node Js superiore al 6 e aver installato e configurato Nginx o Apache in modo da implementare il proxyPass descritto sopra. Tali configurazioni sono di fatto uguali ad ogni istanza che si desidera allocare per cui una soluzione per gestire ed automatizzare il tutto è utilizzare un'immagine Docker. Docker permette di creare delle istanze, chiamate container, separate dal sistema operativo che le ospita.Tali istanze sono meno pesanti rispetto ad una macchina virtuale, questo grazie alla condivisione delle risorse del kernel tra i vari container. Oltre a ciò sono, grazie alla condivisione delle risorse a basso livello, molto veloci da avviare e da arrestare e questo rende Docker la tecnologia perfetta per questo genere di problematiche.
+L’idea è quella di creare un immagine docker che contiene NodeJs e Nginx insieme alla sua configurazione ed iniettare all’interno di essa, al momento della creazione dell’istanza, il codice sorgente configurato mediante i dati inviati dall’utente.\vspace{5mm}
+
+Per quanto riguarda invece la compilazione e la firma degli applicativi mobili è necessario configurare in modo particolare la macchina che eseguirà questo tipo di task. Di fatto bisogna che sia una versione di macOs visto che Apple non fornisce ad ora una versione di XCode per sistemi linux o Windows. Per quanto riguarda Android è necessario installare la command line interface del Gradle. A questo punto sarà necessario preparare uno script in bash che eseguirà una volta chiamato, tutte le procedure di compilazione e di firma degli applicativi. Tale procedura dovrà renderli disponibili al download inserendoli in una apposita directory dove un applicativo gli servirà e potranno essere scaricati e distribuiti attraverso gli store.\vspace{5mm}
+
+Questi sono alcuni dei punti implementativi da svolgere per arrivare ad avere un prodotto con queste features. L’architettura progettuale risultante sarà simile a quella descritta in figura\vspace{5mm}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{images/schemaIstanzeAlakai.png}
+\caption{Schema del funzionamento della possibile futura del Control Manager di istanze di Open Air Museum}
+\end{figure}
+
+Come si può notare vi sarà un service worker sviluppato in node che controllerà l’esecuzione dello script bash iniettando tutte le variabili di environment come i percorsi ai certificati ,precedentemente caricati, indispensabili per la procedura di compilazione e di firma.\vspace{5mm}
