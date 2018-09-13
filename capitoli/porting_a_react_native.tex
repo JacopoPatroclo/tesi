@@ -29,13 +29,21 @@ Dal punto di vista grafico inoltre sono state apportate molte modifiche dati i f
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.4\textwidth]{images/screenSantarcangelo.jpg}
-\includegraphics[width=0.4\textwidth]{images/SchemaOpenAirMuseum.png}
-\includegraphics[width=0.4\textwidth]{images/screenSantarcangelo1.jpg}
-\includegraphics[width=0.4\textwidth]{images/SchemaOpenAirMuseum.png}
+\includegraphics[width=0.3\textwidth]{images/screenSantarcangelo.jpg}
+\includegraphics[width=0.3\textwidth]{images/listapunti.png}
 \caption{Confronto HomeScreen Open Air Museum vecchia e nuova versione}
 \end{figure}
 \vspace{5mm}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\textwidth]{images/screenSantarcangelo1.jpg}
+\includegraphics[width=0.3\textwidth]{images/singolopunto.png}
+\caption{Confronto HomeScreen Open Air Museum vecchia e nuova versione}
+\end{figure}
+\vspace{5mm}
+
+
 Sfruttando la potente libreria di animazioni fornite da React-native è stato possibile creare un'interfaccia ricca e moderna mantenendo le prestazioni elevate anche su dispositivi non recenti e di alta fascia. Il “driver” di tale libreria è infatti nativo ed implementato nel modo più efficiente per i due sistemi operativi. Questo offre solide prestazioni anche nel caso di animazioni molto complesse ma aggiunge anche alcune limitazioni. La più evidente è l’obbligo di implementare tali animazioni con un pattern dichiarativo indicando quindi in precedenza il modo in cui l’oggetto deve comportarsi per poi avere la possibilità di eseguirlo mediante un'interfaccia di start e stop. Tale problematica non ha composto un grave problema implementativo. DI fatto si è trattato solamente di implementare il tutto seguendo il pattern descritto sopra.\vspace{5mm}
 
 Un'ulteriore funzionalità richiesta al porting è quella di poter, riprodurre dei contenuti audio all’interno dell’applicativo. In particolare questi contenuti audio sono presenti sul server e sono serviti attraverso un'api che permette il loro streaming. In precedenza era stato sviluppato un player che utilizzava i rispettivi sdk nativi per controllare l’audio, erano in grado di avviare e stoppare l’audio e proseguire avanti veloce mediante una barra di trascinamento. Le funzionalità per i due sistemi operativi erano le stesse ma viste le diversità tra le due piattaforme è stato necessario re implementare la stessa logica due volte. Utilizzando React-native è stato possibile scrivere la logica una sola volta e condividerla tra le due piattaforme utilizzando un package open source chiamato react-native-audio-streamer. Tale package permette di configurare uno stream audio mediante un url e di controllare la riproduzione, tale libreria utilizza la medesima implementazione attraverso il “bridge” sfruttando a livello nativo due librerie distinte. Per Ios DuoAudioStreamer mentre per Android ExoPlayer. L’utilizzo di tale package accelera lo sviluppo di questa parte mostrando il vantaggio di React-native sopra a soluzioni simili e cioè l’ecosistema. Creare una dipendenza esterna in un progetto enterprise come questo può essere una scelta rischiosa. Legarsi ad un software di terze parti per una features cruciale dell’applicativo può sfociare in problematiche che spaziano dal mantenimento futuro a bug non facilmente tracciabili ma data la semplicità di questa particolare libreria tale rischio è ragionevolmente contenuto.\vspace{5mm}
@@ -43,11 +51,11 @@ Un'ulteriore funzionalità richiesta al porting è quella di poter, riprodurre d
 Come si è visto l’impiego di React-native non ha soppiantato la totalità della parte nativa, anzi questo approccio “misto” ha permesso di non trovarsi limitati da una tecnologia rispetto ad un altra offrendo sempre il giusto tool per la features richiesta. Durante le ricerche legate allo sviluppo di questo prodotto non sono stati trovati linguaggi o framework più flessibili e adatti alle molteplici configurazioni di questo progetto, questo specifico caso è un ottimo esempio di come l’impiego di Javascript al di fuori dal browser sia la scelta vincente per creare un applicativo moderno e flessibile senza sacrificare manutenibilità e consistenza nel tempo.\vspace{5mm}
 
 \section{Punti critici e problematiche}
-Durante questo porting sono stati evidenziati una serie di punti critici implementativi, ne discuterò indicando la soluzione da me intrapresa e se presente una soluzione alternativa.\vspace{5mm}
+\vspace{5mm}Durante questo porting sono stati evidenziati una serie di punti critici implementativi, ne discuterò indicando la soluzione da me intrapresa e se presente una soluzione alternativa.\vspace{5mm}
 
 L’utilizzo di una libreria esterna come quella per la gestione degli stream audio oppure quella per gestire la mappa, creano delle dipendenze che aggiungono una serie di incognite sulla longevità del prodotto. E’ importante legare il progetto il meno possibile a risorse esterne non del tutto affidabili. Per tale ragione entrambe le risorse esterne che l’applicativo utilizza e cioè la libreria per lo streaming audio e l’SDK Estimote sono gestite attraverso un layer software. L’applicativo utilizza la libreria attraverso le Api fornite da questa interfaccia, in caso di necessità si può sostituire più agevolmente la vecchia libreria con la nuova mappando le nuove api sull’interfaccia. Ovviamente questo è possibile nei limiti di una coesione logica tra la il vecchio e nuovo SDK. Da notare che un'implementazione di questo tipo permette inoltre di abbandonare del tutto il software esterno implementando la propria libreria integrandola nel progetto facilmente attraverso tale interfaccia. Un ulteriore possibile soluzione a questo problema sarebbe quello di gestire internamente la maggior parte del software ma in alcuni casi questa soluzione deve essere scartata per l’elevato costo.\vspace{5mm}
 
 Altra problematica è data dalla coesistenza di tre linguaggi differenti nella stessa codebase. In alcuni casi React-native può aggiungere complessità invece che rimuoverla, infatti se la quantità di codice nativo a cui dover attingere è molto grande si rischia di dover mantenere tre ecosistemi a differenza di due. Maggiori sono le tecnologie da conoscere per operare su di un prodotto maggiore è il bagaglio necessario per mantenerlo, questo rende il software più complesso da gestire. In questo caso un'attenta analisi del progetto prima dello sviluppo può guidare verso una soluzione differente ed evitare il problema. Nel caso specifico la quantità di codice nativo necessaria non è stata molta ma tale problema potrà presentarsi in futuro con il proseguire del progetto.\vspace{5mm}
 
-
+Un alto punto critico da mantenere in considerazione con questo tipo di porting è la completa scomparse di database Sql in favore di uno state manager ad oggetti. Data l'impossibilità di gestire i dati in modo paritetico rispetto alla versione nativa è stato necessario riadattare la logica applicativa a questa nuova tecnologia. Non esistendo più tempi di latenza per accedere ai dati questo ha migliorato molto la pulizia e l'asciuttezza del codice. La modifica dei dati avviene attraverso mutazioni allo stato e questo comporta in caso di applicativi molto grandi una crescente complessità se non si dividono in modo accorto le varie aree dello stato dividendo in modo netto una area dall'altra usando nodi il più possibile vicini alla radice. Tale approccio infatti permette di ottenere una buona "separation of concerns"\cite{SOC} delle varie aree logiche dell'applicativo ponendo entrypoint diversi per l'accesso ai dati a seconda della zona logica prestabilita. Ciò permette di risolvere il problema descritto sopra, offrendo un guadagno in termini di semplicità rispetto ad una soluzione basata su SqLite.
 
