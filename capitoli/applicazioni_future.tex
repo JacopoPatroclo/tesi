@@ -20,3 +20,26 @@ Questi sono alcuni dei punti implementativi da svolgere per arrivare ad avere un
 \end{figure}
 
 Come si può notare vi sarà un service worker sviluppato in node che controllerà l’esecuzione dello script bash iniettando tutte le variabili di environment come i percorsi ai certificati ,precedentemente caricati, indispensabili per la procedura di compilazione e di firma.\vspace{5mm}
+
+\section{Esecuzione di processi in Nodejs}
+\vspace{5mm}Per rendere possibile questo tipo di prodotto è necessario che l'applicativo in Javascript sia in grado di pilotare uno script bash. Per fare questo è possibile utilizzare il modulo ChildProcess\cite{ChildProcess} che espone una serie di metodi di esecuzione possibili. Tra quelle disponibili vi è l'esecuzione attraverso spawn che esegue lo script indicato all'interno di un processo generato come figlio di quello principale. Il controllo dello stato di questo processo avviene attraverso gli stream di output che questo processo utilizza come standard output. Per esempio nel caso di un programma in c++ che stampa a console la somma tra due numeri passati come parametri, lo standard output è descritto dalla libreria iostream il quale compito è fare da ponte tra l'esecuzione del processo e la shell che lo sta eseguendo. Node.js tramite l'interfaccia a stream è in grado di agganciarsi a questo output e ridirigerlo in modo asincrono a Javascript che sarà in grado di mettere in coda l'esecuzione della funzione associata all'evento 'data' e di usufruire in modo asincrono e non bloccante dell'output del programma in c++ sopracitato.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\textwidth]{images/cppCode.png}
+\includegraphics[width=0.4\textwidth]{images/jsCode.png}
+\caption{Esempio di esecuzione codice c++ da Javascript}
+\end{figure}
+
+\vspace{5mm}Come si può vedere dalla figura 4.2 l'immagine a destra è il codice in c++ che verifica l'esistenza di soli due argomenti e nel caso gli converte in interi ed esegue la somma stampandola mediante cout che non fa altro che convertire tale valore in stringa inviandolo poi allo standard output. Passando all'immagine di destra si può vedere come mediante il modulo child-process e il metodo spawn si crea un processo utilizzando il risultato della compilazione del precedente codice c++ passando come parametri i due numeri che si desiderano sommare. Successivamente Javascript, in modo asincrono, si mette in ascolto dello standard output del processo catturandone i valori. Una volta che il processo ha completato l'esecuzione viene lanciato l'evento 'close' passando come parametro nel callback il codice di uscita del processo. Nel caso in cui esso sia uguale a zero il processo è stato eseguito correttamente e si può mostrare i risultati raccolti dall'esecuzione, altrimenti si mostrano gli errori. Da notare come nel caso in cui i numeri passati al processo in c++ sono diversi da sue il return del main torna 1 e sta ad indicare che vi è stato un errore e quindi vengono mostrati invece tutti gli output raccolti da stderr che è lo standard output per gli errori.
+
+\vspace{5mm}Come si può intuire questa soluzione non è molto scalabile dato che utilizzare lo standard output per ricevere il risultato di un operazione potrebbe essere difficile nel caso di logiche più complesse. La soluzione potrebbe essere quella di utilizzate un ponte di comunicazione tra processi come Redis Pub/Sub \cite{PubSubRedis} in modo da poter comunicare attivamente in modo asincrono da entrambi i lati. Non descriverò nel dettaglio l'implementazione di questa soluzione perchè esula dallo scopo della tesi, ma offre un punto di partenza per lo sviluppo di una libreria per NodeJs per la compilazione automatica di applicativi nativi (ios e android).
+
+
+
+
+
+
+
+
+

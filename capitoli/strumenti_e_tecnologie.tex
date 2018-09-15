@@ -17,7 +17,12 @@ Indicherò le varie tecnologie utilizzate per l'attuale versione dell'applicativ
 
 	MySql/SqLite: Sono le tecnologie che utilizzano i due database relazionali di cui il prodotto è fornito. Tutti i dati lato server sono contenuti in un database MySql che viene pilotato tramite l’applicativo lato server in Nodejs. Entrambi i database lato client utilizzano invece SqLite. Lo schema relazionale per il lato server è il seguente, si vedano gli allegati per i due schemi ER corrispondenti.\vspace{5mm}
 	
-	/// schema er vecchio
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/erOld.png}
+\caption{Schema ER vecchia versione}
+\end{figure}
+\vspace{5mm}
 	
 \section{Presentazione delle tecnologie utilizzabili in Alakai}\vspace{5mm}
 Indicherò le varie tecnologie utilizzate per la nuova versione dell'applicativo ponendo particolare attenzione a che vantaggi portano.\vspace{5mm}
@@ -29,26 +34,31 @@ React: Libreria Javascript per lo sviluppo di interfacce grafiche a componenti, 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.7\textwidth]{images/store.png}
-\caption{Interfaccia Store}
+\caption{Interfaccia Store Redux}
 \end{figure}
 \vspace{5mm}
-
 	React-Native: Implementazione di React ma per l’ambiente nativo. Questa tecnologia verrà usata per creare l’interfaccia e la logica degli applicativi IOS e Android. Tale scelta infatti permette di condividere buona parte del codice tra le due piattaforme.\vspace{5mm}
 
 	Express: Implementazione del pattern middleware per Node Js. Tale framework permette di gestire con granularità il routing delle Api e da la possibilità di centralizzare la gestione degli errori. L'implementazione di tale pattern si riflette in un applicativo che esegue le computazioni attraverso una cascata di funzioni chiamate una dopo l'altra in ordine, ed ognuna di esse ha la facoltà di decidere se continuare la catena o interrompere la computazione. Questo permette di avere una struttura affidabile per gestire il routeing delle Rest api rendendo molto veloce e predittivo lo sviluppo.\vspace{5mm}
 
-	SqLite: “File-based” database utilizzato lato server per il salvataggio delle informazioni fornite dagli utenti admin attraverso l’applicativo web per la raccolta dei dati. Tale scelta è stata fatta per la flessibilità di questa tecnologia che permette di gestire internamente all’applicativo la creazione dello stesso e non attraverso una dipendenza esterna. Questo è stato fatto per semplificare ulteriormente il deploy eliminando le necessità di aggiungere una configurazione ulteriore all’ambiente.\vspace{5mm}
+	SqLite: “File-based” database utilizzato lato server per il salvataggio delle informazioni fornite dagli utenti admin attraverso l’applicativo web per la raccolta dei dati. Tale scelta è stata fatta per la flessibilità di questa tecnologia che permette di gestire internamente all’applicativo la creazione dello stesso e non attraverso una dipendenza esterna. Questo è stato fatto per semplificare ulteriormente il deploy eliminando le necessità di aggiungere una configurazione ulteriore all’ambiente
 	
-	/// schema er nuovo
-	
-	\vspace{5mm}Ora descriverò brevemente il nuovo schema logico dell'applicativo e come le varie tecnologie, tutte basate su Javascript interagiscono fra loro.\vspace{5mm}
-	Come si può vedere in figura
-
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{images/stackAlakai.png}
+\includegraphics[width=0.9\textwidth]{images/erNew.png}
+\caption{Schema ER nuova versione}
+\end{figure}
+
+	
+	\vspace{5mm}Ora descriverò brevemente il nuovo schema logico dell'applicativo e come le varie tecnologie, tutte basate su Javascript interagiscono fra loro.
+	
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/stackAlakai.png}
 \caption{Schema stack nuova versione}
 \end{figure}
+
+\vspace{5mm}Come si può vedere in figura 2.4 lo stack risulta meno complesso e vanta l'utilizzo di meno tecnologie per raggiungere le medesime funzionalità. Come si può notare i punti di interazione con la piattaforma sono gestiti da due applicativi basati entrambi su React, il primo è l'applicativo mobile che utilizza React-native mentre il secondo è la webApp admin. Entrambi questi applicativi ricevono input dall'utente ma il primo utilizza hardware esterno per arricchire la propria raccolta informazioni con la posizione dell'utente, ricevuta attraverso il gps o Beacon bluethoot. Tali applicativi interagiscono con il server mediante delle Rest Api che, come nella versione precedente, forniscono i dati sui punti e i percorsi; ma, in contrasto con l'applicativo prima del refactor, portano anche la configurazione impostata dall'applicativo admin in modo da adattarlo alle richieste di chi gestisce i punti e i percorsi. Tali dati vengono salvati in un database SqLite il cui unico punto di accesso è attraverso le api fornite dal server. Tale approccio garantisce che i dati siano sempre consistenti con quello che è l'applicativo server in modo da mantenere la struttura consistente con il versionamento del prodotto. Un ulteriore struttura per mantenere i dati è presente a lato mobile mediante Redux, questo è utile per poter salvare le configurazioni e mantenerle tali in modo consistente attraverso l'app in modo da creare una coesione tra tutti i componenti di React che necessitano di usufruire dei dati. Tale stato applicativo viene idratato attraverso le api Rest e quando questo non è possibile per mancanza di rete permette di utilizzare tramite React-native lo Storage locale del dispositivo come luogo di backup. Ogni mutazione dello stato applicativo viene infatti seguita da un operazione asincrona che ha lo scopo di salvare uno snapshot dello store nella memoria del dispositivo in modo da poter essere sempre consistente nel mostrare gli ultimi dati disponibili anche se il dispositivo risulta offline.
 
 \section{Confronto tra la nuova e la vecchia versione}\vspace{5mm}
 Confrontando gli stack delle due applicazioni in termini di tecnologie utilizzate possiamo vedere i motivi per cui le scelte fatte migliorano il software e sotto quali aspetti. \vspace{5mm}

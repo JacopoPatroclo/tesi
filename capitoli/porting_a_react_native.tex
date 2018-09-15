@@ -13,9 +13,11 @@ Per quanto riguarda iOS è necessario aggiungere alle dipendenze del progetto Es
 A questo punto è necessario creare un file che permetta di dichiarare ed esportare i metodi di configurazione e gestione della libreria dichiarandoli utilizzando l’interfaccia fornita da RCTBridgeModule  di react-native per renderli visibili lato Javascript al momento della compilazione e dell’esecuzione dell’applicativo. Un ulteriore punto importante è che la comunicazione attraverso il “bridge” è asincrona e per questo è possibile passare valori da nativo a javascript mediante callback o eventi. \vspace{5mm}
 
 Nel caso specifico la scelta è ricaduta su di un sistema ad eventi, per la maggior flessibilità di utilizzo. In particolare i metodi messi a disposizione attraverso il “bridge” sono:
-	- initialize:(NSDictionary *)config
-	- startObservingZones:(NSArray *)zonesJSON
-	- stopObservingZones
+\begin{itemize}
+	\item initialize:(NSDictionary *)config
+	\item startObservingZones:(NSArray *)zonesJSON
+	\item stopObservingZones()
+\end{itemize}
 	\vspace{5mm}
 Il primo ha lo scopo di inizializzare l’sdk Estimote attraverso un oggetto che contiene i vari parametri di configurazione. Il secondo permette di mettere il device in ascolto su una lista di zone identificate mediante dei tag, quando il telefono entrerà in una zona così configurata verrà lanciato l’evento “Enter”. Per l’uscita da una regione verrà lanciato l’evento “Exit” mentre per un cambio di contesto mentre si è in una zona verrà lanciato “Change”. Il contesto è un parametro passato nella funzione chiamata dalla sottoscrizione a questi eventi e contiene le informazioni del beacon che rappresenta quella regione.\vspace{5mm}
 
@@ -39,6 +41,14 @@ Dal punto di vista grafico inoltre sono state apportate molte modifiche dati i f
 \centering
 \includegraphics[width=0.3\textwidth]{images/screenSantarcangelo1.jpg}
 \includegraphics[width=0.3\textwidth]{images/singolopunto.png}
+\caption{Confronto HomeScreen Open Air Museum vecchia e nuova versione}
+\end{figure}
+\vspace{5mm}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\textwidth]{images/listapercorsiold.jpg}
+\includegraphics[width=0.3\textwidth]{images/listapercorsi.png}
 \caption{Confronto HomeScreen Open Air Museum vecchia e nuova versione}
 \end{figure}
 \vspace{5mm}
