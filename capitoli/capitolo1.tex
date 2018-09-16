@@ -1,0 +1,40 @@
+\chapter*{Open Air Museum} % senza numerazione
+\label{sommario}
+
+\addcontentsline{toc}{chapter}{Sommario} % da aggiungere comunque all'indice
+\vspace{5mm}
+
+\emph{descrivi NEL DETTAGLIO come funziona l'applicazione. metti anche le schermate principali. se dopo parli gia delle tecnologie, qui descrivi le funzionalità.} \vspace{5mm}
+
+\subsection{App nativa}\vspace{5mm}
+
+L’applicazione consiste in una guida turistica e multimediale in grado di mostrare ai suoi utenti una serie di punti di interesse collegati da percorsi preimpostati. Ogni punto dispone di un pacchetto multimediale di audio e immagini oltre ad una descrizione, un nome e delle informazioni tutte gestibili e configurabili in oltre 160 lingue. Tali punti possono essere navigati attraverso l’interfaccia grafica degli applicativi per smartphone - sfruttando la geolocalizzazione del dispositivo - oppure attraverso la modalità Esplora dell’applicazione. Quest'ultima permette, una volta attivata, di essere notificati automaticamente sulla presenza di punti di interesse nella zona circostante, dando la possibilità, o meno, all’utente di richiedere informazioni aggiuntive. \vspace{5mm}
+
+\subsection{iBeacon}\vspace{5mm}
+
+Quest’ultima features è stata implementata sfruttando la tecnologia iBeacon e Bluetooth 4.0, che permette al dispositivo di percepire l’ingresso in una specifica area, marcata da un piccolo radiofaro bluetooth, il quale marca di fatto un determinato punto di interesse.\vspace{5mm}
+
+La metodologia con cui viene identificata una zona rispetto ad un altra è usando la firma del Beacon e cioè attraverso i suoi tre parametri identificativi, UUID, major e minor. Il primo è una stringa alfanumerica a 128 bit che ha lo scopo di identificare un gruppo di Beacon, ad esempio l’insieme posizionato all’interno del comune, mentre gli ultimi due, insieme all’UUID identificano un beacon specifico. Utilizzando lo UUID per definire una Ragion di ricerca è possibile escludere da essa tutti gli altri beacon non appartenenti all’applicativo. Infatti tutti i beacon da noi posizionati sono contraddistinti da uno specifico UUID mentre differiscono per major e minor, in modo da identificarli singolarmente. Un ulteriore metodo per gestire la “scoperta” di beacon in una regione è quello di verificarne la distanza dal telefono, così facendo si possono scartare i beacon più lontani e notificare all’utente solamente quelli più prossimi, questo è fondamentale dato che vi sono delle zone della città molto “dense” di punti di interesse e una semplice ricerca non basterebbe a definire la prossimità di un utente a un punto rispetto ad un altro; questa features ha aiutato a realizzare una localizzazione più precisa e risultando in un’esperienza d’uso migliore.\vspace{5mm}
+
+\subsection{Software gestionale}\vspace{5mm}
+
+	Attraverso l’applicativo in Filemaker, esposto tramite un’interfaccia web, i dipendenti del Comune potevano gestire l’inserimento dei punti e dei percorsi compresi di media e testi relativi. \vspace{5mm}
+	
+La visualizzazione dei punti avviene attraverso due schermate, la prima è una lista che mostra tutti i punti con un ordine casuale e vi è la possibilità di navigare ad una schermata più dettagliata dove vi sono le informazioni del punto selezionato ed è possibile riprodurre i contenuti multimediali associati ad esso. La seconda mostra l'elenco di tutti i percorsi disponibili, dando la possibilità, una volta selezionato, di vedere nel dettaglio di quali punti è composto e in che ordine visitarli.\vspace{5mm}
+
+\subsection{Server}\vspace{5mm}
+	
+La parte server, invece, espone delle Rest Api che consumate forniscono sia i dati sopracitati che un servizio di autenticazione mediante Json Web Token. Questo applicativo è stato sviluppato senza l’ausilio di framework esterni per il routing o per la gestione dell’autenticazione o la generazione dei token di sessione. Node Js è stato scelto in questo caso per la sua efficienza nelle operazioni di I/O rispetto ad una tecnologia più canonica come PHP o Java, vista la grande quantità e la tipologia di file da servire. Implementando un I/O non bloccante nel caso di invio di file di medie dimensioni come audio o immagini questo risulta nel riuscire a servire più client contemporaneamente utilizzando meno risorse \cite{BlockingVsNonBlocking} \vspace{5mm}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/SchemaOpenAirMuseum.png}
+\caption{Schema logico dello stack di Open Air Museum}
+\end{figure}
+
+
+
+
+
+
+
