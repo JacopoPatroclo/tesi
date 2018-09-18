@@ -9,7 +9,7 @@ Nel 2009 un ragazzo di nome Ryan Dahl presentò alla JSConf Node Js. Ciò che pr
 
 La vera novità era che per scrivere un applicativo web non bisognava più conoscere due linguaggi (Javascript client e PHP, Java, Python, ecc… server) ma ne bastava uno. Inizialmente la risposta fu tiepida e Node Js rischiò più volte di essere abbandonato, ma con il crescere sempre maggiore della stabilità del framework e la fondazione della Node.js Foundation ad ora è una delle 4 maggiori tecnologie di sviluppo al mondo. L’avvento di questa tecnologia ha incubato una miriade di prodotti diversi dando vita a uno degli ecosistemi più grandi e variegati mai esistiti.\vspace{5mm}
 
-\subsection{ Frameworks Javascript}\vspace{5mm}
+\subsection{Frameworks Javascript}\vspace{5mm}
 
 	L’ecosistema Javascript per il web è molto ricco di soluzioni per tutti gli ambiti di impiego. Per quanto riguarda il lato applicativo front-end vi sono numerose scelte, sia che si intenda operare nel browser che fuori da esso. I principali framework per lo sviluppo web front-end sono React, AngularJs, Vue e Ember. I primi tre implementano il pattern MVC “Model-View-Controller” ovvero la separazione di ciò che detiene i dati da ciò che li renderizza all’utente attraverso una logica che fa da moderatore del flusso. Sia Angular che Vue che Ember offrono nativamente “two-way data binding” ovvero la capacità di mantenere in sincronia tra View e Model. React d’altro canto è stato pensato per essere una libreria e non come un vero e proprio framework infatti il suo approccio è puramente legato alla costruzione dell’interfaccia grafica slegata da quelle che sono tutte le implementazioni possibili nella gestione e nel flusso dei dati. \vspace{5mm}
 
@@ -21,16 +21,33 @@ D’altro canto React-native è framework basato sull’utilizzo di un motore di
 
 Per la parte server vi sono disponibili anche qui diverse scelte e tecnologie, seppur orientate alla stessa soluzione molto diverse tra di loro. Vi sono librerie come Express js che sono pensate per essere molto leggere e di lieve impatto nella strutturazione dei dati. Di contro ve ne sono altre che offrono un profondo controllo su tutti gli aspetti dell’applicativo come MeteorJs e Sails Js che offrono una serie di features come la generazione automatica di Api seguendo la specifica delle “CROUD operation”, la generazione automatica di modelli per descrivere nuove entità e la gestione automatica dell’autenticazione e la gestione degli utenti.\vspace{5mm}
 
+\section{Sviluppo mobile}\vspace{5mm}
+
+Al giorno d'oggi sono disponibili sul mercato una vasta gamma di smartphone che variano per dimensione e potenza. Tali applicativi permettono di utilizzare software proveniente da terze parti, installabili mediante uno store digitale messo a disposizione, solitamente, dal mantenitore del sistema operativo. Tali software sono indicati con il nome di Apps o Application.\vspace{5mm}
+
+I metodi canonici per lo sviluppo di Apps con queste tecnologie sono l'utilizzo dei tool messi a disposizione dal mantenitore del sistema operativo e cioè, XCode e Android studio. Ogni sistema operativo ha a disposizione un sdk che permette di sfruttare l'hardware del dispositivo; tale sdk però è relegato ad un solo sistema operativo, con molte differenze, sia tecniche che logiche, tra i due. Un ulteriore differenza è il linguaggio, iOS utilizza ObjectiveC o Swift mentre Android Java o Kotlin. Tali dissomiglianze portano a dover, nel caso si desideri sviluppare per entrambi i sistemi operativi, a conoscere entrambi i linguaggi e i rispettivi sdk.\vspace{5mm}
+
+\subsection{Sviluppo mobile e Javascript}\vspace{5mm}
+
+Ciò che Javasctipt e il web in generale ha portato allo sviluppo nativo è l'approccio del 'write one run anywhere' e cioè la possibilità di avere una codebase unica per più sistemi operativi. Javasctipt negli anni si è posto come 'lingua franca' del Web e in grado di raggiungere zone molto lontane da quella per cui era stato originariamente progettato. Il parco di framework che offrono questo tipo di approccio sono molteplici e implementano tecniche differenti per raggiungere il medesimo scopo:
+\begin{itemize}
+\item Soluzione Ibrida
+\item Soluzione Compilata
+\end{itemize}
+
+La prima utilizza un approccio ibrido e cioè l'applicativo è di fatto una applicativo web che viene eseguito all'interno di un browser che ha però capacità speciali di interazione con l'hardware dello smartphone. Di fatto offre un layer al di sopra degli sdk nativi che permettono alla web app di accedere a funzionalità native come il bluethoot e la fotocamera.\vspace{5mm}
+
+La soluzione compilata invece utilizza uno stratagemma diverso. Tutti i componenti descritti in Javascript attraverso una particolare interfaccia vengono compilati dal framework che gli converte in componenti nativi, mentre la logica applicativa viene lanciata su di un thread separato che comunica attraverso un costrutto software con la controparte nativa. Tale approccio permette di avere prestazioni più elevate e maggior flessibilità rispetto all'ibrido ma risulta più complesso, non essendo presenti layer che astraggono i rispettivi sdk ma è necessario seguire le direttive imposte dal sistema operativo.
+
+
 \section{Audioguide}\vspace{5mm}
 
 Vi sono disponibili diversi prodotti che offrono la possibilità di creare audioguide per determinate zone o città. Alcuni di questi utilizzano un approccio di “selezione luogo” e cioè chi utilizza l’applicativo deve prima indicare a quale zona è interessato per poi essere reindirizzato alla sezione relativa a quell’area geografica. Altri prodotti come Open Air Museum utilizzano un approccio “mono scopo” e cioè l’audioguida è relativa ad una sola area specifica e sviluppata ad Hoc per quello scopo. L’approccio descritto per primo permette di dover mantenere un solo prodotto e di servire molteplici enti, questo però limita molto la customizzazione che tali applicativi possono possedere. Di contro il secondo approccio permette una customizzazione elevata, essendo il prodotto sviluppato appositamente per l’ente; questo però comporta un overhead non indifferente per chi mantiene tale applicativo. Infatti se si vogliono servire un gran numero di realtà risulta dispendioso dover gestire e mantenere molti applicativi diversi, ognuno con le sue peculiarità e caratteristiche.\vspace{5mm}
 
 Un ulteriore punto di riflessione sono le funzionalità. La totalità dei competitor presi in considerazione permette di visualizzare contenuti multimediali collegati a punti di interesse o percorsi, ma in pochi offrono un servizio di localizzazione attivo a guidare all’interno della zona di interesse. La totalità degli applicativi presi in considerazione che hanno questa features utilizzano come tecnologia di localizzazione il gps che per zone all’aperto, come lo possono essere città o parchi naturali, è un ottima soluzione; però per quanto riguarda la localizzazione indoor come in un museo per esempio, risulta imprecisa e poco utilizzabile. IBeacon in questo caso risulta la tecnologia migliore per localizzazione degli utenti dato che non deve fare affidamento a triangolazioni satellitari.\vspace{5mm}
 
-Quello che offrirà al nuova versione di Open Air Museum è un approccio misto rispetto a quello descritto all’inizio di questo capitolo, ciò che si andrà a realizzare andrà a rientrare nella categoria “mono scopo” ma grazie all’elevata flessibilità delle impostazioni di avvio sarà possibile customizzare in modo profondo l’applicativo mantenendo allo stesso tempo una documentazione esplicita sulle proprie features. Infatti il file di configurazione è in formato json quindi facilmente accessibile sia ad umani sia a computer. ---- spiega meglio.\vspace{5mm}
+Quello che offrirà al nuova versione di Open Air Museum è un approccio misto rispetto a quello descritto all’inizio di questo capitolo, ciò che si andrà a realizzare andrà a rientrare nella categoria “mono scopo” ma grazie all’elevata flessibilità delle impostazioni di avvio sarà possibile customizzare in modo profondo l’applicativo mantenendo allo stesso tempo una documentazione esplicita sulle proprie features. Infatti il file di configurazione è in formato Json\cite{JSON} quindi facilmente accessibile sia ad umani sia a computer.\vspace{5mm}
 
 
-[PUOI DIRE ALTRO?] \vspace{5mm}
 
-prendi spunto da "Cross-platform data-driven applications with React Native and GraphQL: Principles and practices" !!!!!!
 

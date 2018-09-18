@@ -2,8 +2,6 @@
 \label{cha:intro}
 \vspace{5mm}
 
-\emph{Questo capitolo descrive in maniera più approfondita le tecnologie utilizzate nella prima e nella seconda versione in un confronto dettagliato.}
-
 \section{Tecnologie utilizzate in Open Air Museum}\vspace{5mm}
 
 Indicherò le varie tecnologie utilizzate per l'attuale versione dell'applicativo.\vspace{5mm}
@@ -16,47 +14,46 @@ Filemaker è una piattaforma per creare applicativi personalizzati votati alla c
 
 	Come descritto in precedenza, Node js è un runtime di Javascript al di fuori del browser.Tale programma, come dicuterò più avanti, utilizza Chrome V8\cite{V8} come motore per eseguire Javascript ed grazie ciò NodeJs è stato fornito di una suite di interfacce per la comunicazione con l'hardware. In particolare questa particolare implementazione viene indicata come I/O non bloccante\cite{AsincIO}. La particolarità di questa soluzione è che mette a disposizione una serie di Api a basso livello che permettono di utilizzare la scheda di rete e quindi di avviare server TCP e HTTP oltre che accesso al file system quindi lettura e scrittura su disco. In Open air museum questo framework è utilizzato per costruire il lato server ed esporre una serie di Api Http Rest che permettono la fruizione dei dati. Tutti i media, quindi audio e immagini vengono serviti anch’essi da questa piattaforma che oltre a questo gestisce anche l’autenticazione degli utenti e la gestione degli stessi. \vspace{5mm}
 	
-	\subsection{Estimote}\vspace{5mm}
-	
 	\subsection{Developer Tools}\vspace{5mm}
 	
-	[RISCRIVI QUESTA PARTE.]
-
-	Xcode è una Ide per lo sviluppo IOS. L’applicativo per tale sistema operativo è stato sviluppato in Swift4.\vspace{5mm}
-
-	Android Studio è una Ide per lo sviluppo Android. L’applicativo per tale sistema operativo è stato sviluppato in Java per android.\vspace{5mm}
-
-	MySql/SqLite sono le tecnologie che utilizzano i due database relazionali di cui il prodotto è fornito. Tutti i dati lato server sono contenuti in un database MySql che viene pilotato tramite l’applicativo lato server in Nodejs. Entrambi i database lato client utilizzano invece SqLite. 
+	Per sviluppare questo progetto le tecnologie che sono state utilizzate sono state dettate principalmente dalla necessità data dal sistema operativo che si voleva supportare o dalla tecnologia su cui si desiderava sviluppare. In particolare per lo sviluppo delle applicazioni mobili si è utilizzato XCode e Swift 4 come linguaggio per iOS mentre per Android si è utilizzato Android Studio e Java. La gestione delle dipendenze esterne si è optato per CocoaPods\cite{COCOA} per iOS mentre si è utilizzato Gradle 27.0.3 già incluso in Android Studio.\vspace{5mm}
 	
-	Visual Studio Code
+	Per sviluppare la parte server si è utilizzato VisualStudio Code, un editor di testo con alcune funzionalità tra cui un implementazione grafica di un debugger per Nodejs.\vspace{5mm}
 	
-	Github
+	L'intero progetto è stato metto sotto versioning control utilizzando Git come tecnologia e Bitbucket come applicativo di gestione delle repository. Si è adottato l'uso di creare tre repository separate per permettere una gestione più granulare delle impostazioni offerte da Bitbucket.
 	
-	Bitbucket?
-	
-		\subsection{Modello ER}\vspace{5mm}
+	\subsection{Modelli ER}\vspace{5mm}
 		
-	Lo schema relazionale per il lato server è il seguente, si vedano gli allegati per i due(???) schemi ER corrispondenti. [ESPANDI?]  \vspace{5mm}
+	Il lato server utilizza come database relazionale MySql, che viene sfruttato attraverso un interfaccia Javascript che permette di connettersi al database  creando query inviandole mediante questa connessione ricevendo i dati in modo asincrono.
+	Per quanto riguarda le due applicazioni, viene utilizzato sempre un database relazionale ma utilizzando SqLite come tecnologia; questo perché più leggero e adatto a essere eseguito su di un dispositivo dalle prestazioni ridotte.
+	Lo schema relazionale per il lato server è il seguente:  \vspace{5mm}
 	
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{images/erOld.png}
-\caption{Schema ER vecchia versione}
+\caption{Schema ER vecchia versione server}
 \end{figure}
 \vspace{5mm}
 
-[mi sa che manca uno schema.]
+Come si può vedere la gestione delle funzionalità multilingue avviene attraverso una relazione tra uno a molti tra i punti e i percorsi con la tabella 'language'. Questa tabella contiene tutti i testi per lingua supportata. Tale accorgimento è assente nello schema lato smartphone dato che, al cambiamento della lingua le nuove traduzioni verranno scaricate dalle Rest Api fornite a lato server. Lo schema relazionale per il lato mobile è il seguente:\vspace{30mm}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/erOldSpartphone.png}
+\caption{Schema ER vecchia versione smartphone}
+\end{figure}
+\vspace{5mm}
 	
 \section{Tecnologie versione 2.0}\vspace{5mm}
 Indicherò le varie tecnologie utilizzate per la nuova versione dell'applicativo ponendo particolare attenzione a che vantaggi portano.\vspace{5mm}
 
 	\subsection{React}\vspace{5mm}
 
-React è una Libreria Javascript per lo sviluppo di interfacce grafiche a componenti, permette lo sviluppo di single page application (SPA). In Alakai l’applicativo che permette l’inserimento dei dati e dei media oltre alle descrizioni dei punti di interesse e dei percorsi è creata utilizzando questa tecnologia sfruttando un set di Api che il lato server fornisce. Questo centralizza la gestione dei dati in un unico luogo e cioè il server, tale approccio permette di utilizzare l'applicativo backend come unica fonte di verità senza dover gestire due prodotti separati come vi era in precedenza. [ESPANDI!!!]\vspace{5mm}
+React\cite{React} è una Libreria Javascript per lo sviluppo di interfacce grafiche a componenti, permette lo sviluppo di single page application (SPA). Nella versione successiva l’applicativo che permette l’inserimento dei dati e dei media oltre alle descrizioni dei punti di interesse e dei percorsi è creata utilizzando questa tecnologia sfruttando un set di Api che il lato server fornisce. Questo centralizza la gestione dei dati in un unico luogo e cioè il server, tale approccio permette di utilizzare l'applicativo backend come unica fonte di verità senza dover gestire due prodotti separati come vi era in precedenza.\vspace{5mm}
 
 	\subsection{Redux}\vspace{5mm}
 	
-	Redux è una libreria Javascript che permette di gestire lo stato applicativo come un unico oggetto statico, modificabile soltanto attraverso della azioni ben definite applicate ad esso. Ogni modifica viene fatta attraverso una funzione pura\cite{PureFunction} chiamata reducer che modifica a seconda dell'implementazione una parte specifica dello store. La firma di tale funzione prende due parametri, il primo è l'oggetto che rappresenta lo stato attuale dell'applicativo, il secondo è ciò che rappresenta l'azione che si sta compiendo. Tale azione dovrà sempre possedere una tipologia mentre può o non può avere un payload di dati che si riferiscono a quell'azione specifica. Ciò che ritornerà il reducer sarà un oggetto che diventerà il nuovo stato applicativo. Questa tecnologia è utilizzata per gestire i dati che gli applicativi mobile recupereranno dal server in modo predittivo e sicuro. Tale implementazione permette di evitare side effects\cite{SideEffects} nello stato applicativo facendo si che l'unica fonte di verità sia sempre affidabile e prevedibile.  [ESPANDI!!!] \vspace{5mm}
+	Redux è una libreria Javascript che permette di gestire lo stato applicativo come un unico oggetto statico, modificabile soltanto attraverso della azioni ben definite applicate ad esso. Ogni modifica viene fatta attraverso una funzione pura\cite{PureFunction} chiamata reducer che modifica a seconda dell'implementazione una parte specifica dello store. La firma di tale funzione prende due parametri, il primo è l'oggetto che rappresenta lo stato attuale dell'applicativo, il secondo è ciò che rappresenta l'azione che si sta compiendo. Tale azione dovrà sempre possedere una tipologia mentre può o non può avere un payload di dati che si riferiscono a quell'azione specifica. Ciò che ritornerà il reducer sarà un oggetto che diventerà il nuovo stato applicativo. Questa tecnologia è utilizzata per gestire i dati che gli applicativi mobile recupereranno dal server in modo predittivo e sicuro. Tale implementazione permette di evitare side effects\cite{SideEffects} nello stato applicativo facendo si che l'unica fonte di verità sia sempre affidabile e prevedibile. \vspace{5mm}
 	
 \begin{figure}[h]
 \centering
@@ -98,18 +95,4 @@ Ora descriverò brevemente il nuovo schema logico dell'applicativo e come le var
 
 Tale approccio garantisce che i dati siano sempre consistenti con quello che è l'applicativo server in modo da mantenere la struttura consistente con il versionamento del prodotto. Un ulteriore struttura per mantenere i dati è presente a lato mobile mediante Redux, questo è utile per poter salvare le configurazioni e mantenerle tali in modo consistente attraverso l'app in modo da creare una coesione tra tutti i componenti di React che necessitano di usufruire dei dati. Tale stato applicativo viene idratato attraverso le api Rest e quando questo non è possibile per mancanza di rete permette di utilizzare tramite React-native lo Storage locale del dispositivo come luogo di backup. Ogni mutazione dello stato applicativo viene infatti seguita da un operazione asincrona che ha lo scopo di salvare uno snapshot dello store nella memoria del dispositivo in modo da poter essere sempre consistente nel mostrare gli ultimi dati disponibili anche se il dispositivo risulta offline.\vspace{5mm}
 
-\section{Confronto tra le due versioni}\vspace{5mm}  
-[forse questo va piu nelle conclusioni?]
-
-Confrontando gli stack delle due applicazioni in termini di tecnologie utilizzate possiamo vedere i motivi per cui le scelte fatte migliorano il software e sotto quali aspetti. \vspace{5mm}
-
-Grazie all'utilizzo del medesimo framework lato mobile e lato web è stato possibile condividere gran parte del codice e delle logiche di interazione con le api lato server. Un altra zona di condivisione è l'implementazione di Redux. Data la sua agnosticità sulla piattaforma utilizzata questa libreria è un perfetto esempio di come l'utilizzo di uno stack basato interamente su Javascript porti ad un riutilizzo del codice in modo importante ma sopratutto in modi impraticabili precedentemente. In particolare tra l’applicativo admin sviluppato come webapp per il browser e gli applicativi nativi ho condiviso la totalità dell’implementazione gestendo lo store allo stesso modo. Le differenze principali sono sulla libreria che permette di interfacciarsi con le api lato server. Seppur molti metodi sono condivisi, quelli relativi alla mutazione dei dati sono riserveti ai soli utenti autenticati e cioè Admin. Tale peculiarità però non influisce nella possibilità di riutilizzare parte della libreria che implementa sia i metodi lato amministratore che quelli lato utente senza privilegi.\vspace{5mm} 
-
-Un ulteriore punto è che rispetto alla versione precedente vi è una somiglianza molto forte tra quello che è l’applicativo web e l’applicativo nativo, le due applicazioni non sono compatibili ma condividono gran parte delle logiche e dei pattern essendo di fatto lo stesso framework. Ciò permette di avere un livello di complessità all'approccio a questo progetto più bassa della versione precedente. Questo porta a tempi più corti per l'apprendimento dei pattern e delle logiche e di conseguenza risulta in una miglior produttività.\vspace{5mm}
-	
-La scelta dell’utilizzo di un database a file con la possibilità di configurare e passare ad un database “classico” si è rivelata molto importante per la scalabilità dell’applicativo. SqLite risulta più comodo in fase di deploy di contro, non ha le prestazioni di un database “classico” e la possibilità di configurare rapidamente la tecnologia da utilizzare è un plus importante. Questo si ottiene grazie all’impiego di un ORM in grado di fornire questa features come Sequelize. Oltre a questo permette di implementare in modo veloce migrazioni e seeder restando sempre agnostico sulla tecnologia a database. La versione precedente conteneva una pesante assunzione sull’utilizzo di un database MySql e ciò abbassava sostanzialmente la flessibilità e il riutilizzo del prodotto.\vspace{5mm}
-
-Un altra differenza rispetto alla precedente è l’esistenza dell’applicativo admin in react che dovrà essere servito dall’applicativo server. Per fare questo è necessario che tutte le richieste non inviate direttamente a /api, vengano tutte reindirizzare all’applicativo in modo che la SPA utilizzi il router interno a React per mostrare i contenuti corrispondenti all’url della richiesta.\vspace{5mm}
-
-Riguardo al lato “admin”, cioè quello che va a sostituire Filemaker nella raccolta dati, è stato sviluppato con React. La scelta di sviluppare una SPA\cite{SPA} per questo compito è stata dettata da un bisogno di rendere questa operazione iterabile e ripetibile. Nel caso in cui il cliente volesse cambiare dei testi o correggere delle traduzioni può farlo in autonomia, senza dover passare da una figura che traduca le modifiche richieste aggiungendole a database manualmente. Questo processo inoltre astrae ulteriormente la struttura del database durante il processo di inserimento dei dati offrendo quindi flessibilità su modifiche future alla struttura. Un altro punto a favore della scelta di una SPA \vspace{5mm}
 
