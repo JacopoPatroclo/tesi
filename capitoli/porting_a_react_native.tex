@@ -1,10 +1,42 @@
-\chapter{Porting a React-native}
-\label{cha:intro}
+\chapter{Open Air Museum versione 2.0}
 \vspace{5mm}
 
+\section{Server}\vspace{5mm}
+
+L'applicativo lato server è stato riscritto riscritto ma le sue funzionalità principali sono rimaste invariate. Ciò che è stato modificato sono le tecnologie utilizzate. Ora la gestione del database viene fatta attraverso un ORM chamato Sequelize che offre una serie di funzionalità fondamentali per rendere l'applicativo. In primis da la possibilità, nel caso dell'utilizzo di SqLite come tecnologia, di generare un database all'avvio dell'applicativo se al percorso indicato non ne esiste alcuno. Genera, la struttura del database utilizzando la dichiarazione di modelli che avvengono mediante le sue api. Infine offre la possibilità di astrarre le query tramite un interfaccia più famigliare a Javascript senza obbligare il programmatore a generarle tramite concatenazione di stringhe o altri metodi. Un altro importate framework utilizzato per il routing delle api è Express.\vspace{5mm}
+
+Una features che differenzia la vecchia implementazione rispetto alla nuova sono una serie di endpoint che permettono di gestire e inviare la configurazione degli applicativi lato client cosi da centralizzare il più possibile la personalizzazione degli applicativi sia mobile che admin.  
+
+\section{Applicativo Admin}\vspace{5mm}
+
+Il compito dell'applicativo admin è quello di sostituire quello in Filemaker ed espandere alcune sue funzionalità. Come descritto in precedenza questo applicativo è stato sviluppato come una SPA utilizzando React come framework di sviluppo. Le features che possiede sono: la possibilità di modificare testi e media per i vari punti e percorsi di interesse, la possibilità di creare percorsi selezionando e ordinando punti precedentemente creati e la capacità di poter monitorare l'utilizzo della piattaforma attraverso un pannello che mostra i punti più visitati e i percorsi più seguiti. L'accesso a tale applicativo è possibile solo attraverso autenticazione contro il server mediante le Rest Api da esso fornite.\vspace{5mm}
+
+\section{Modello ER}\vspace{5mm}
+
+Ora descriverò brevemente il nuovo schema logico dell'applicativo e come le varie tecnologie, tutte basate su Javascript interagiscono fra loro.
+	
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/erNew.png}
+\caption{Schema ER nuova versione}
+\end{figure}
+	
+	
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/stackAlakai.png}
+\caption{Schema logico della struttura 2.0}
+\end{figure}
+
+\vspace{5mm}Come si può vedere in figura 2.4 lo stack risulta meno complesso e vanta l'utilizzo di meno tecnologie per raggiungere le medesime funzionalità. Come si può notare i punti di interazione con la piattaforma sono gestiti da due applicativi basati entrambi su React, il primo è l'applicativo mobile che utilizza React-native mentre il secondo è la webApp admin. Entrambi questi applicativi ricevono input dall'utente ma il primo utilizza hardware esterno per arricchire la propria raccolta informazioni con la posizione dell'utente, ricevuta attraverso il gps o Beacon bluethoot. Tali applicativi interagiscono con il server mediante delle Rest Api che, come nella versione precedente, forniscono i dati sui punti e i percorsi; ma, in contrasto con l'applicativo prima del refactor, portano anche la configurazione impostata dall'applicativo admin in modo da adattarlo alle richieste di chi gestisce i punti e i percorsi. Tali dati vengono salvati in un database SqLite il cui unico punto di accesso è attraverso le api fornite dal server. \vspace{5mm}
+
+Tale approccio garantisce che i dati siano sempre consistenti con quello che è l'applicativo server in modo da mantenere la struttura consistente con il versionamento del prodotto. Un ulteriore struttura per mantenere i dati è presente a lato mobile mediante Redux, questo è utile per poter salvare le configurazioni e mantenerle tali in modo consistente attraverso l'app in modo da creare una coesione tra tutti i componenti di React che necessitano di usufruire dei dati. Tale stato applicativo viene idratato attraverso le api Rest e quando questo non è possibile per mancanza di rete permette di utilizzare tramite React-native lo Storage locale del dispositivo come luogo di backup. Ogni mutazione dello stato applicativo viene infatti seguita da un operazione asincrona che ha lo scopo di salvare uno snapshot dello store nella memoria del dispositivo in modo da poter essere sempre consistente nel mostrare gli ultimi dati disponibili anche se il dispositivo risulta offline.\vspace{5mm}
+
+
+\section{Porting applicativi Nativi}
 \emph{Qui descriverò nel dettaglio il porting degli applicativi nativi a React-native, descrivendo il percorso implementativo e riassumendo i punti critici.}
 \vspace{5mm}
-\section{Caratteristiche principali}\vspace{5mm}
+\subsection{Caratteristiche principali}\vspace{5mm}
 
 La caratterizzazione fondamentale di questo tipo di porting è quello di non compromettere la funzionalità iniziale dell’applicativo, mantenendo un “lookAndfeel” il più possibile vicino all’applicativo iniziale, ma apportando allo stesso le possibili migliorie date dal nuovo ambiente. La prima problematica affrontata è stata quella di poter gestire la modalità Esplora da Javascript e cioè essere in grado di controllare il bluetooth dello smartphone e mediante una task in background monitorare l’avvicinarsi o meno a specifiche aree marcate da un dongle. La tecnologia di comunicazione bluetooth supportata dalla versione nativa era IBeacon mediante un SDK sviluppato da Estimote. La decisione di mantenerla anche nel porting è stata data dall hardware gia configurato e presente sul territorio. Come detto in precedenza la comunicazione tra il reame nativo e quello Javascript avviene attraverso una particolare struttura software chiamata bridge. Tramite le Api messe a disposizione da react-native è possibile utilizzare questa struttura per passare dati tra i due reami. Ora descriverò nel dettaglio in che modo utilizzare tali api per garantire nel reame Javascript le stesse Api dell’SDK Estimote proximity, sia su iOS che su Android.\vspace{5mm}
 
@@ -60,7 +92,19 @@ Un'ulteriore funzionalità richiesta al porting è quella di poter, riprodurre d
 
 Come si è visto l’impiego di React-native non ha soppiantato la totalità della parte nativa, anzi questo approccio “misto” ha permesso di non trovarsi limitati da una tecnologia rispetto ad un altra offrendo sempre il giusto tool per la features richiesta. Durante le ricerche legate allo sviluppo di questo prodotto non sono stati trovati linguaggi o framework più flessibili e adatti alle molteplici configurazioni di questo progetto, questo specifico caso è un ottimo esempio di come l’impiego di Javascript al di fuori dal browser sia la scelta vincente per creare un applicativo moderno e flessibile senza sacrificare manutenibilità e consistenza nel tempo.\vspace{5mm}
 
-\section{Punti critici e problematiche}
+\subsection{Implementazione di Redux}\vspace{5mm}
+
+Per l'implementazione di Redux si è scelto di sviluppare una piccola libreria da condividere tra l'applicativo mobile e la web-app admin. Questa libreria comprende l'insieme dei Reducer e delle Action disponibili sia nell'applicativo mobile che in quello web e un costrutto software per usufruire delle Rest Api lato server. Questo approccio ha permesso di velocizzare notevolmente lo sviluppo permettendo di riutilizzare la parte che gestiva il flusso logico applicativo concentrandosi solamente sui componenti dediti alla visualizzazione grafica dei dati.\vspace{5mm}
+
+Come descritto in precedenza lo stato applicativo consiste in un oggetto immutabile che detiene tutti i dati necessari all'applicativo. Quindi oltre ai vari punti e percorsi nello store sono contenute anche delle impostazioni relative all'applicativo specifico, come la lingua selezionata dall'utente o l'utilizzo o meno di IBeacon come sistema di localizzazione.\vspace{5mm}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{images/store.png}
+\caption{Interfaccia Store Redux}
+\end{figure}
+
+\subsection{Punti critici e problematiche}
 \vspace{5mm}Durante questo porting sono stati evidenziati una serie di punti critici implementativi, ne discuterò indicando la soluzione da me intrapresa e se presente una soluzione alternativa.\vspace{5mm}
 
 L’utilizzo di una libreria esterna come quella per la gestione degli stream audio oppure quella per gestire la mappa, creano delle dipendenze che aggiungono una serie di incognite sulla longevità del prodotto. E’ importante legare il progetto il meno possibile a risorse esterne non del tutto affidabili. Per tale ragione entrambe le risorse esterne che l’applicativo utilizza e cioè la libreria per lo streaming audio e l’SDK Estimote sono gestite attraverso un layer software. L’applicativo utilizza la libreria attraverso le Api fornite da questa interfaccia, in caso di necessità si può sostituire più agevolmente la vecchia libreria con la nuova mappando le nuove api sull’interfaccia. Ovviamente questo è possibile nei limiti di una coesione logica tra la il vecchio e nuovo SDK. Da notare che un'implementazione di questo tipo permette inoltre di abbandonare del tutto il software esterno implementando la propria libreria integrandola nel progetto facilmente attraverso tale interfaccia. Un ulteriore possibile soluzione a questo problema sarebbe quello di gestire internamente la maggior parte del software ma in alcuni casi questa soluzione deve essere scartata per l’elevato costo.\vspace{5mm}

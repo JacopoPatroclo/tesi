@@ -1,6 +1,54 @@
 \chapter{Strumenti e tecnologie}
 \label{cha:intro}
 \vspace{5mm}
+Questo capitolo descrive le varie tecnologie Javascript disponibili sul mercato e in che modo possono essere combinate per costruire il nuovo stack applicativo.
+
+\section{Javascript}\vspace{5mm}
+
+Javascript è nato come linguaggio di scripting lato client e ha man mano preso piede come uno dei linguaggi più flessibili e dinamici, diventando uno standard dei browser moderni dichiarando la morte di progetti come Netscape Navigator.\vspace{5mm}
+
+Nel 2009 un ragazzo di nome Ryan Dahl presentò alla JSConf Node Js. Ciò che propose Ryan era quello di utilizzare Javascript come linguaggio lato server utilizzando una strategia simile a quella di Java con la JVM quindi sviluppando un layer di api per utilizzare le risorse del sistema operativo combinato con la flessibilità e la comodità di un linguaggio interpretato.\vspace{5mm}
+
+La vera novità era che per scrivere un applicativo web non bisognava più conoscere due linguaggi (Javascript client e PHP, Java, Python, ecc… server) ma ne bastava uno. Inizialmente la risposta fu tiepida e Node Js rischiò più volte di essere abbandonato, ma con il crescere sempre maggiore della stabilità del framework e la fondazione della Node.js Foundation ad ora è una delle 4 maggiori tecnologie di sviluppo al mondo. L’avvento di questa tecnologia ha incubato una miriade di prodotti diversi dando vita a uno degli ecosistemi più grandi e variegati mai esistiti.\vspace{5mm}
+
+\subsection{Frameworks Javascript}\vspace{5mm}
+
+	L’ecosistema Javascript per il web è molto ricco di soluzioni per tutti gli ambiti di impiego. Per quanto riguarda il lato applicativo front-end vi sono numerose scelte, sia che si intenda operare nel browser che fuori da esso. I principali framework per lo sviluppo web front-end sono React, AngularJs, Vue e Ember. I primi tre implementano il pattern MVC “Model-View-Controller” ovvero la separazione di ciò che detiene i dati da ciò che li renderizza all’utente attraverso una logica che fa da moderatore del flusso. Sia Angular che Vue che Ember offrono nativamente “two-way data binding” ovvero la capacità di mantenere in sincronia tra View e Model. React d’altro canto è stato pensato per essere una libreria e non come un vero e proprio framework infatti il suo approccio è puramente legato alla costruzione dell’interfaccia grafica slegata da quelle che sono tutte le implementazioni possibili nella gestione e nel flusso dei dati. \vspace{5mm}
+
+Nel caso di applicativi complessi che devono gestire molti dati, questa parte può risultare complessa e particolarmente sensibile a bug. Per questo, soluzioni come Redux possono risultare funzionali a tale scope implementativo. Lo scopo di tale libreria è quello di contenere lo stato-applicativo e fare in modo che sia sempre in uno stato certo e consistente permettendo la modifica di esso solo attraverso delle “Action”. Ad ogni “Action” o azione corrisponde una tipologia che il reducer interpreta per modificare lo stato di conseguenza. Il reducer è una funzione pura che prende in input lo stato attuale e l’azione eseguita su di esso e ritorna il nuovo stato applicativo. Essendo i reducer funzioni pure sono prevedibili, prive di “Side effects” e facilmente testabili.\vspace{5mm} 
+
+Per quanto riguarda la parte applicativa per le due piattaforme mobili le scelte possibili sono racchiuse in Cordova/Phonegap, Ionic e React-native. I primi due sono dei “wrap” attorno ad una webView nativa con una serie di Api rese disponibili a Javascript che gira all’interno del browser che risiede nella webView. Tale soluzione è seppur funzionale, non ottimale per il caso d’uso specifico; infatti l’applicativo mobile necessità di avere accesso al bluetooth e ad altre Api non disponibili negli ambienti di Cordova/PhoneGap. Da notare che Ionic, seppur basato sulla medesima tecnologia mette a disposizione delle Api per interagire in modo completo con il bluetooth, questo e la sua maturità lo rendono un'ottima scelta per sviluppare la parte mobile dell’applicativo.\vspace{5mm} 
+
+D’altro canto React-native è framework basato sull’utilizzo di un motore di compilazione che non fa altro che prendere i costrutti Javascript dichiarati utilizzando librerie e convertirli in codice nativo, a seconda della piattaforma. Inoltre permette, se necessario di interfacciarsi con l’ambiente nativo a piacimento dando la possibilità di utilizzare un costrutto chiamato “bridge” che offre un’interfaccia a Javascript verso il nativo e viceversa. La differenza principale tra i sistemi che usano Cordova e React-native è che il primo ha come goal quello di “Write once run everywhere” mentre il secondo è “Learn once use everywhere”.\vspace{5mm}
+
+Per la parte server vi sono disponibili anche qui diverse scelte e tecnologie, seppur orientate alla stessa soluzione molto diverse tra di loro. Vi sono librerie come Express js che sono pensate per essere molto leggere e di lieve impatto nella strutturazione dei dati. Di contro ve ne sono altre che offrono un profondo controllo su tutti gli aspetti dell’applicativo come MeteorJs e Sails Js che offrono una serie di features come la generazione automatica di Api seguendo la specifica delle “CROUD operation”, la generazione automatica di modelli per descrivere nuove entità e la gestione automatica dell’autenticazione e la gestione degli utenti.\vspace{5mm}
+
+\section{Sviluppo mobile}\vspace{5mm}
+
+Al giorno d'oggi sono disponibili sul mercato una vasta gamma di smartphone che variano per dimensione e potenza. Tali applicativi permettono di utilizzare software proveniente da terze parti, installabili mediante uno store digitale messo a disposizione, solitamente, dal mantenitore del sistema operativo. Tali software sono indicati con il nome di Apps o Application.\vspace{5mm}
+
+I metodi canonici per lo sviluppo di Apps con queste tecnologie sono l'utilizzo dei tool messi a disposizione dal mantenitore del sistema operativo e cioè, XCode e Android studio. Ogni sistema operativo ha a disposizione un sdk che permette di sfruttare l'hardware del dispositivo; tale sdk però è relegato ad un solo sistema operativo, con molte differenze, sia tecniche che logiche, tra i due. Un ulteriore differenza è il linguaggio, iOS utilizza ObjectiveC o Swift mentre Android Java o Kotlin. Tali dissomiglianze portano a dover, nel caso si desideri sviluppare per entrambi i sistemi operativi, a conoscere entrambi i linguaggi e i rispettivi sdk.\vspace{5mm}
+
+\subsection{Sviluppo mobile e Javascript}\vspace{5mm}
+
+Ciò che Javasctipt e il web in generale ha portato allo sviluppo nativo è l'approccio del 'write one run anywhere' e cioè la possibilità di avere una codebase unica per più sistemi operativi. Javasctipt negli anni si è posto come 'lingua franca' del Web e in grado di raggiungere zone molto lontane da quella per cui era stato originariamente progettato. Il parco di framework che offrono questo tipo di approccio sono molteplici e implementano tecniche differenti per raggiungere il medesimo scopo:
+\begin{itemize}
+\item Soluzione Ibrida
+\item Soluzione Compilata
+\end{itemize}
+
+La prima utilizza un approccio ibrido e cioè l'applicativo è di fatto una applicativo web che viene eseguito all'interno di un browser che ha però capacità speciali di interazione con l'hardware dello smartphone. Di fatto offre un layer al di sopra degli sdk nativi che permettono alla web app di accedere a funzionalità native come il bluethoot e la fotocamera.\vspace{5mm}
+
+La soluzione compilata invece utilizza uno stratagemma diverso. Tutti i componenti descritti attraverso una particolare interfaccia vengono compilati dal framework che gli converte in componenti nativi, mentre la logica applicativa in viene lanciata su di un thread separato che comunica attraverso un costrutto software con la controparte nativa. Questo thread utilizza un un motore per eseguire il codice Javascritp, che viene fornito, in modalità svilluppo, da un server locale che ha il compito di accorpare il sorgente; mentre viene incluso nel binario compilato una volta che l'applicativo deve essere rilasciato. Tale approccio permette di avere prestazioni più elevate e maggior flessibilità rispetto all'ibrido ma risulta più complesso, non essendo presenti layer che astraggono i rispettivi sdk ma è necessario seguire le direttive imposte dal sistema operativo.
+
+
+\section{Audioguide}\vspace{5mm}
+
+Vi sono disponibili diversi prodotti che offrono la possibilità di creare audioguide per determinate zone o città. Alcuni di questi utilizzano un approccio di “selezione luogo” e cioè chi utilizza l’applicativo deve prima indicare a quale zona è interessato per poi essere reindirizzato alla sezione relativa a quell’area geografica. Altri prodotti come Open Air Museum utilizzano un approccio “mono scopo” e cioè l’audioguida è relativa ad una sola area specifica e sviluppata ad Hoc per quello scopo. L’approccio descritto per primo permette di dover mantenere un solo prodotto e di servire molteplici enti, questo però limita molto la customizzazione che tali applicativi possono possedere. Di contro il secondo approccio permette una customizzazione elevata, essendo il prodotto sviluppato appositamente per l’ente; questo però comporta un overhead non indifferente per chi mantiene tale applicativo. Infatti se si vogliono servire un gran numero di realtà risulta dispendioso dover gestire e mantenere molti applicativi diversi, ognuno con le sue peculiarità e caratteristiche.\vspace{5mm}
+
+Un ulteriore punto di riflessione sono le funzionalità. La totalità dei competitor presi in considerazione permette di visualizzare contenuti multimediali collegati a punti di interesse o percorsi, ma in pochi offrono un servizio di localizzazione attivo a guidare all’interno della zona di interesse. La totalità degli applicativi presi in considerazione che hanno questa features utilizzano come tecnologia di localizzazione il gps che per zone all’aperto, come lo possono essere città o parchi naturali, è un ottima soluzione; però per quanto riguarda la localizzazione indoor come in un museo per esempio, risulta imprecisa e poco utilizzabile. IBeacon in questo caso risulta la tecnologia migliore per localizzazione degli utenti dato che non deve fare affidamento a triangolazioni satellitari.\vspace{5mm}
+
+Quello che offrirà al nuova versione di Open Air Museum è un approccio misto rispetto a quello descritto all’inizio di questo capitolo, ciò che si andrà a realizzare andrà a rientrare nella categoria “mono scopo” ma grazie all’elevata flessibilità delle impostazioni di avvio sarà possibile customizzare in modo profondo l’applicativo mantenendo allo stesso tempo una documentazione esplicita sulle proprie features. Infatti il file di configurazione è in formato Json\cite{JSON} quindi facilmente accessibile sia ad umani sia a computer.\vspace{5mm}
 
 \section{Tecnologie utilizzate in Open Air Museum}\vspace{5mm}
 
@@ -14,57 +62,32 @@ Filemaker è una piattaforma per creare applicativi personalizzati votati alla c
 
 	Come descritto in precedenza, Node js è un runtime di Javascript al di fuori del browser.Tale programma, come dicuterò più avanti, utilizza Chrome V8\cite{V8} come motore per eseguire Javascript ed grazie ciò NodeJs è stato fornito di una suite di interfacce per la comunicazione con l'hardware. In particolare questa particolare implementazione viene indicata come I/O non bloccante\cite{AsincIO}. La particolarità di questa soluzione è che mette a disposizione una serie di Api a basso livello che permettono di utilizzare la scheda di rete e quindi di avviare server TCP e HTTP oltre che accesso al file system quindi lettura e scrittura su disco. In Open air museum questo framework è utilizzato per costruire il lato server ed esporre una serie di Api Http Rest che permettono la fruizione dei dati. Tutti i media, quindi audio e immagini vengono serviti anch’essi da questa piattaforma che oltre a questo gestisce anche l’autenticazione degli utenti e la gestione degli stessi. \vspace{5mm}
 	
-	\subsection{Developer Tools}\vspace{5mm}
+	\subsection{MySql e SqLite}\vspace{5mm}
 	
-	Per sviluppare questo progetto le tecnologie che sono state utilizzate sono state dettate principalmente dalla necessità data dal sistema operativo che si voleva supportare o dalla tecnologia su cui si desiderava sviluppare. In particolare per lo sviluppo delle applicazioni mobili si è utilizzato XCode e Swift 4 come linguaggio per iOS mentre per Android si è utilizzato Android Studio e Java. La gestione delle dipendenze esterne si è optato per CocoaPods\cite{COCOA} per iOS mentre si è utilizzato Gradle 27.0.3 già incluso in Android Studio.\vspace{5mm}
+	Per la gestione dei database è stato utilizzato MySql per la parte server, mentre per la parte mobile SqLite. Sono entrambe soluzioni relazionali, la differenza tra le due è che la prima utilizza un applicativo che gestisce le interazioni con il database, accettando richieste e inviando dati attraverso un interfaccia tcp. Il secondo invece utilizza una gestione a file e cioè non sono necessari applicativi intermedi ma l'estrazione dei dati è fatta attraverso il file system. E' chiaro come la seconda soluzione sia più adatta su dispositivi che dispongono di poca potenza e una batteria limitata dato che non vi è necessità di avviare un ulteriore processo che gestisca l'interazione con i dati.
 	
-	Per sviluppare la parte server si è utilizzato VisualStudio Code, un editor di testo con alcune funzionalità tra cui un implementazione grafica di un debugger per Nodejs.\vspace{5mm}
+	\subsection{Java per Android e Swift}\vspace{5mm}
 	
-	L'intero progetto è stato metto sotto versioning control utilizzando Git come tecnologia e Bitbucket come applicativo di gestione delle repository. Si è adottato l'uso di creare tre repository separate per permettere una gestione più granulare delle impostazioni offerte da Bitbucket.
+	Per sviluppare gli applicativi mobili si sono utilizzati Java con Android Studio e Swift con XCode, rispettivamente per l'applicativo Android e IOs. L'utilizzo dei linguaggi nativi ha permesso un maggior accesso a quello che sono le funzionalità dell'hardware ed in particolare il bluethoot. Grazie alla tecnologia IBeacon è possibile localizzare gli utenti e mostrare contenuti coerenti con la loro posizione. Tale tecnologia è supportata da un gran numero di dispositivi che montano bluethoot LE, e posseggono una versione del sistema operativo superiore al 4.3 per android e 7.0 per IOs.
 	
-	\subsection{Modelli ER}\vspace{5mm}
-		
-	Il lato server utilizza come database relazionale MySql, che viene sfruttato attraverso un interfaccia Javascript che permette di connettersi al database  creando query inviandole mediante questa connessione ricevendo i dati in modo asincrono.
-	Per quanto riguarda le due applicazioni, viene utilizzato sempre un database relazionale ma utilizzando SqLite come tecnologia; questo perché più leggero e adatto a essere eseguito su di un dispositivo dalle prestazioni ridotte.
-	Lo schema relazionale per il lato server è il seguente:  \vspace{5mm}
-	
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{images/erOld.png}
-\caption{Schema ER vecchia versione server}
-\end{figure}
-\vspace{5mm}
-
-Come si può vedere la gestione delle funzionalità multilingue avviene attraverso una relazione tra uno a molti tra i punti e i percorsi con la tabella 'language'. Questa tabella contiene tutti i testi per lingua supportata. Tale accorgimento è assente nello schema lato smartphone dato che, al cambiamento della lingua le nuove traduzioni verranno scaricate dalle Rest Api fornite a lato server. Lo schema relazionale per il lato mobile è il seguente:\vspace{30mm}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{images/erOldSpartphone.png}
-\caption{Schema ER vecchia versione smartphone}
-\end{figure}
-\vspace{5mm}
-	
-\section{Tecnologie versione 2.0}\vspace{5mm}
+\section{Tecnologie utilizzate in Open Air Museum 2.0}\vspace{5mm}
 Indicherò le varie tecnologie utilizzate per la nuova versione dell'applicativo ponendo particolare attenzione a che vantaggi portano.\vspace{5mm}
 
 	\subsection{React}\vspace{5mm}
 
-React\cite{React} è una Libreria Javascript per lo sviluppo di interfacce grafiche a componenti, permette lo sviluppo di single page application (SPA). Nella versione successiva l’applicativo che permette l’inserimento dei dati e dei media oltre alle descrizioni dei punti di interesse e dei percorsi è creata utilizzando questa tecnologia sfruttando un set di Api che il lato server fornisce. Questo centralizza la gestione dei dati in un unico luogo e cioè il server, tale approccio permette di utilizzare l'applicativo backend come unica fonte di verità senza dover gestire due prodotti separati come vi era in precedenza.\vspace{5mm}
+React\cite{React} è una Libreria Javascript per lo sviluppo di interfacce grafiche a componenti, permette lo sviluppo di single page application (SPA). Tale libreria è basata sul concetto di Dom virtuale e One-way data flow. Il primo è un astrazione del Dom HTML che permette di eseguire manipolazioni dello stesso in maniera molto più efficiente, per poi essere renderizzato a seconda delle modifiche effettuate su di esso. Il secondo invece è il modo che utilizza React per trasferire i dati attraverso la virtualizzazione appena descritta; l'efficenza di React deriva dalla scelta di gestire il passaggio dei dati in un solo verso, e cioè da nodo padre a nodo figlio.\vspace{5mm}
+
+React utilizza una sintassi chiamata JSX per descrivere i componenti che andranno poi renderizzati mediante l'interazione tra Dom virtuale e Dom HTML. Tale sintassi ricorda l'html ma si tratta di zucchero sintattico. Infatti è necessario configurare un Transpiler come Babel per poter utilizzare questo tipo di sintassi. Una volta che il codice in JSX viene trasposto può essere utilizzato da qualunque browser infatti si tratta di una serie di chiamate a dei metodi che react usa per creare elementi nel Dom virtuale.
 
 	\subsection{Redux}\vspace{5mm}
 	
-	Redux è una libreria Javascript che permette di gestire lo stato applicativo come un unico oggetto statico, modificabile soltanto attraverso della azioni ben definite applicate ad esso. Ogni modifica viene fatta attraverso una funzione pura\cite{PureFunction} chiamata reducer che modifica a seconda dell'implementazione una parte specifica dello store. La firma di tale funzione prende due parametri, il primo è l'oggetto che rappresenta lo stato attuale dell'applicativo, il secondo è ciò che rappresenta l'azione che si sta compiendo. Tale azione dovrà sempre possedere una tipologia mentre può o non può avere un payload di dati che si riferiscono a quell'azione specifica. Ciò che ritornerà il reducer sarà un oggetto che diventerà il nuovo stato applicativo. Questa tecnologia è utilizzata per gestire i dati che gli applicativi mobile recupereranno dal server in modo predittivo e sicuro. Tale implementazione permette di evitare side effects\cite{SideEffects} nello stato applicativo facendo si che l'unica fonte di verità sia sempre affidabile e prevedibile. \vspace{5mm}
+	Redux è una libreria Javascript che permette di gestire lo stato applicativo come un unico oggetto statico, modificabile soltanto attraverso della azioni ben definite applicate ad esso. Ogni modifica viene fatta attraverso una funzione pura\cite{PureFunction} chiamata reducer che modifica a seconda dell'implementazione una parte specifica dello store. La firma di tale funzione prende due parametri, il primo è l'oggetto che rappresenta lo stato attuale dell'applicativo, il secondo è ciò che rappresenta l'azione che si sta compiendo. Tale azione dovrà sempre possedere una tipologia mentre può o non può avere un payload di dati che si riferiscono a quell'azione specifica. Ciò che ritornerà il reducer sarà un oggetto che diventerà il nuovo stato applicativo.\vspace{5mm}
 	
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{images/store.png}
-\caption{Interfaccia Store Redux}
-\end{figure}
-\vspace{5mm}
-
+	Una delle specifiche di Redux è quella che i Reducer siano sincroni e quindi all'interno di essi non è possibile eseguire richieste tramite la rete o utilizzando risorse hardware come l'accesso alla memoria. Per sopperire a questa mancanza si utilizza un costrutto chiamato middleware. Il compito del middleware è quello di eseguire un operazione quando una specifica azione viene eseguita. Tale operazione può essere asincrona e l'unica specifica è che alla sua terminazione essa dovrà lanciare un altra azione sullo store. In questo modo si possono integrare con delle Rest Api, eseguendo un azione per avviare la richiesta ed una per inserire i dati nello store.
+	
 \subsection{React-Native}\vspace{5mm}
 
-	React-Native è l'implementazione di React ma per l’ambiente nativo. Questa tecnologia verrà usata per creare l’interfaccia e la logica degli applicativi IOS e Android. Tale scelta infatti permette di condividere buona parte del codice tra le due piattaforme.\vspace{5mm}
+	React-Native è l'implementazione di React ma per l’ambiente nativo. Si basa sul concetto di visualizzazione del Dom descritto in precedenza con l'unica differenza che la renderizzazione viene fatta tramite un processo che converte i vari nodi del Dom in componenti grafici nativi. In questo modo si mantiene la resa del codice nativo ma pilotata tramite il motore di React. Tale approccio permette di scrivere applicativi nativi utilizzando le conoscenze che si posseggono per l'ambiente web senza per forza rinunciare alle prestazioni dovute alle costrizioni imposte da un web browser. Le Api di React-native permettono inoltre di controllare mediante una specifica dichiarazione del codice nativo. La comunicazione tra il reame Javascript e il reame nativo avviene attraverso un costrutto software chiamato bridge. Tale interfaccia permette di avere una comunicazione full duplex tra il thread Javascript ed altri Nativi. Tale comunicazione avviene in modo completamente asincrono e non bloccante.\vspace{5mm}
 
 \subsection{Express}\vspace{5mm}
 
@@ -73,26 +96,5 @@ React\cite{React} è una Libreria Javascript per lo sviluppo di interfacce grafi
 \subsection{SqLite}\vspace{5mm}
 
 	SqLite è “File-based” database utilizzato lato server per il salvataggio delle informazioni fornite dagli utenti admin attraverso l’applicativo web per la raccolta dei dati. Tale scelta è stata fatta per la flessibilità di questa tecnologia che permette di gestire internamente all’applicativo la creazione dello stesso e non attraverso una dipendenza esterna. Questo è stato fatto per semplificare ulteriormente il deploy eliminando le necessità di aggiungere una configurazione ulteriore all’ambiente.\vspace{5mm}
-	
-	\subsection{Modello ER}\vspace{5mm}
-
-Ora descriverò brevemente il nuovo schema logico dell'applicativo e come le varie tecnologie, tutte basate su Javascript interagiscono fra loro.
-	
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{images/erNew.png}
-\caption{Schema ER nuova versione}
-\end{figure}
-	
-	
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{images/stackAlakai.png}
-\caption{Schema stack nuova versione}
-\end{figure}
-
-\vspace{5mm}Come si può vedere in figura 2.4 lo stack risulta meno complesso e vanta l'utilizzo di meno tecnologie per raggiungere le medesime funzionalità. Come si può notare i punti di interazione con la piattaforma sono gestiti da due applicativi basati entrambi su React, il primo è l'applicativo mobile che utilizza React-native mentre il secondo è la webApp admin. Entrambi questi applicativi ricevono input dall'utente ma il primo utilizza hardware esterno per arricchire la propria raccolta informazioni con la posizione dell'utente, ricevuta attraverso il gps o Beacon bluethoot. Tali applicativi interagiscono con il server mediante delle Rest Api che, come nella versione precedente, forniscono i dati sui punti e i percorsi; ma, in contrasto con l'applicativo prima del refactor, portano anche la configurazione impostata dall'applicativo admin in modo da adattarlo alle richieste di chi gestisce i punti e i percorsi. Tali dati vengono salvati in un database SqLite il cui unico punto di accesso è attraverso le api fornite dal server. \vspace{5mm}
-
-Tale approccio garantisce che i dati siano sempre consistenti con quello che è l'applicativo server in modo da mantenere la struttura consistente con il versionamento del prodotto. Un ulteriore struttura per mantenere i dati è presente a lato mobile mediante Redux, questo è utile per poter salvare le configurazioni e mantenerle tali in modo consistente attraverso l'app in modo da creare una coesione tra tutti i componenti di React che necessitano di usufruire dei dati. Tale stato applicativo viene idratato attraverso le api Rest e quando questo non è possibile per mancanza di rete permette di utilizzare tramite React-native lo Storage locale del dispositivo come luogo di backup. Ogni mutazione dello stato applicativo viene infatti seguita da un operazione asincrona che ha lo scopo di salvare uno snapshot dello store nella memoria del dispositivo in modo da poter essere sempre consistente nel mostrare gli ultimi dati disponibili anche se il dispositivo risulta offline.\vspace{5mm}
 
 
