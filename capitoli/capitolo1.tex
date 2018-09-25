@@ -11,13 +11,21 @@ Questo è possibile grazie a due componenti: la tecnologia iBeacon, che verrà d
 
 \section{iBeacon}\vspace{5mm}
 
-[APPROFONDISCI!]
+La modalità \emph{Esplora} citata nella sezione precedente è stata implementata sfruttando la tecnologia iBeacon basata su Bluetooth 4.0. Essa permette al dispositivo di percepire l’ingresso in una specifica area, marcata da un piccolo radiofaro bluetooth, il quale è collegato a uno determinato punto di interesse dell'applicazione.\vspace{5mm}
 
-La modalità esplora citata nella sezione precedente è stata implementata sfruttando la tecnologia iBeacon e Bluetooth 4.0, che permette al dispositivo di percepire l’ingresso in una specifica area, marcata da un piccolo radiofaro bluetooth, il quale è collegato a uno determinato punto di interesse dell'applicazione.\vspace{5mm}
+\subsection{UUID, major e minor}\vspace{5mm}
 
-La metodologia con cui viene identificata una zona rispetto ad un altra si basa sulla firma del Beacon, ovvero attraverso i suoi tre parametri identificativi: UUID, major e minor. Il primo è una stringa alfanumerica a 128 bit che ha lo scopo di identificare un gruppo di Beacon, mentre gli ultimi due identificano i singoli Beacon. Utilizzando lo UUID per definire una regione (Region) di ricerca è possibile escludere da essa tutti gli altri Beacon non appartenenti allo stesso gruppo. Infatti tutti i Beacon da noi posizionati sono contraddistinti da uno specifico UUID e differiscono per major e minor che permettono di identificarli singolarmente. \vspace{5mm}
+La metodologia con cui viene identificata una zona rispetto ad un altra si basa sulla firma del Beacon, ovvero attraverso i suoi tre parametri identificativi: UUID, major e minor. Il primo è una stringa alfanumerica a 128 bit che ha lo scopo di identificare un gruppo di Beacon, mentre gli ultimi due permettono di identificare i Beacon singolarmente. Per questo motivo, un gruppo di Beacon possiede il medesimo UUID ma differisce per major e minor. Questo tipo di stratagemma è utilizzato per identificare una Regione (Region) che viene utilizzata come area di ricerca.\vspace{5mm}
 
-Un ulteriore metodo per gestire la “scoperta” di Beacon in una regione è quello di verificarne la distanza dal telefono, per scartare i Beacon più lontani e notificare all’utente solamente quelli nel raggio scelto. Questo è stato fondamentale nello sviluppo di Open Air Museum, data la maggiore densità di beacon in alcune aree della città, dove una semplice ricerca non basterebbe a definire la prossimità di un utente a un punto rispetto ad un altro. Questa features ha aiutato a realizzare una localizzazione più precisa, risultando in un’esperienza d’uso migliore.
+\subsection{Region}\vspace{5mm}
+
+Una \emph{Regione} può essere definita mediante i parametri identificativi dei Beacon e permette di eseguire la ricerca o \emph{Ranging} solo sui Beacon che rispettano i parametri utilizzati durante la definizione della stessa. In particolare, creando una regione con uno specifico UUID, la procedura di ricerca rileverà soltanto i dispositivi con la stessa stringa alfanumerica. Questo è vero anche per major e minor. L'utilizzo di questi tre parametri permette quindi di definire molteplici regioni diverse.
+
+\subsection{Ranging e Proximity}\vspace{5mm}
+
+Esistono due diversi sistemi di approccio alla ricerca in una specifica regione. Il \emph{Ranging} fornisce un interfaccia per ottenere una lista ordinata di Beacon che si trovano nelle vicinanze del dispositivo. La lista è ordinata per distanza dallo smartphone: il Beacon più lontano si troverà nell'ultima posizione e quello più vicino nella prima. La ricerca tramite Proximity, invece, non fornisce informazioni sui Beacon specifici nelle vicinanze ma è utilizzata soltanto per identificare o meno l'ingresso in una regione.\vspace{5mm} 
+
+Open Air museum utilizza solamente il primo parametro per identificare la regione di ricerca, quindi tutti i dispositivi Beacon sono impostati per utilizzare quello specifico UUID. Mentre per il protocollo di ricerca utilizza il Ranging perché permette un controllo più preciso sui dispositivi nelle vicinanze.
 
 \section{Software gestionale}\vspace{5mm}
 
@@ -53,7 +61,7 @@ Nel caso di Open Air Museum vengono utilizzati per validare l'autenticazione: fi
 	
 	Per quanto riguarda le due applicazioni mobile, viene utilizzato sempre un database relazionale, ma sfruttando SqLite come tecnologia, che risulta essere più leggera e adatta a essere eseguita su dispositivi dalle prestazioni ridotte. La figura 1.3 mostra lo schema relazionale per il lato mobile.\vspace{5mm}
 	
-	[ espandi descrivendo i vari quadrati/entità]
+	[ espandi descrivendo i vari quadrati/entità]\vspace{5mm}
 
 Come si può vedere, la gestione delle funzionalità multilingue dei punti e dei percorsi avviene attraverso una relazione da uno a molti con la tabella 'language'. Questa tabella contiene tutti i testi per lingua supportata. Tale accorgimento è assente nello schema relazionale dei dispositivi mobili dato che, al cambiamento della lingua, le nuove traduzioni verranno scaricate dalle Rest API fornite a lato server.
 
