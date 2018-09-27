@@ -4,7 +4,7 @@
 \addcontentsline{toc}{chapter}{Sommario} % da aggiungere comunque all'indice
 \vspace{5mm}
 
-\section{Contesto}\vspace{5mm}
+\section*{Contesto}\vspace{5mm}
 
 Un ente pubblico come può essere un piccolo comune storico italiano necessita di una comunicazione efficiente e diretta con i propri visitatori. Open Air Museum, ha come obbiettivo quello di guidare e indirizzare i turisti all’interno della città, storicamente e culturalmente ricca, con una guida virtuale che avrebbe potuto sostituire una persona fisica come guida turistica della zona. Data la grande varietà linguistica dei possibili utenti il prodotto è stato sviluppato multilingue.\vspace{5mm}
 
@@ -12,11 +12,11 @@ Il progetto Open Air Museum è stato sviluppato da me e i miei colleghi del repa
 
 Lo sviluppo del progetto ha richiesto circa sei mesi di lavoro e ha visto un solo upgrade. Durante il periodo di mantenimento del prodotto sono venute alla luce alcune criticità derivate dalle scelte tecniche iniziali: da queste considerazioni è nata la necessità di eseguire un porting dell'intero prodotto. 
 
-\section{Motivazioni}\vspace{5mm}
+\section*{Motivazioni}\vspace{5mm}
 
 Le motivazioni che mi hanno portato a scegliere questo tipo di progetto per la mia tesi triennale sono due: la prima è la necessità di invalidare la credenza che Javascript\cite{JS} sia un linguaggio di secondo ordine e che non possa essere utilizzato come linguaggio principale per grossi progetti. La seconda deriva dal desiderio di costruire un prodotto più performante e scalabile di quello precedentemente sviluppato per fornire all'azienda un'applicativo facilmente rivendibile e mantenibile. 
 
-\section{Problema e Tecniche Utilizzate}\vspace{5mm}
+\section*{Problema e Tecniche Utilizzate}\vspace{5mm}
 
 La problematica principale affrontata era legata alla molteplicità di tecnologie utilizzate nel solution stack della prima versione dell'applicativo, che  rendeva il mantenimento molto costoso. La soluzione che si è scelta per risolvere il problema è stata quella di costruire un nuovo solution stack utilizzando un unico linguaggio. Questo tipo di soluzione porta a una maggiore correlazione logica tra le varie parti del prodotto, alla possibilità di riutilizzare più codice in più zone del progetto e di utilizzare lo stesso pattern di sviluppo lungo tutta la codebase di Open Air Museum.\vspace{5mm}
 
@@ -24,15 +24,17 @@ Per raggiungere questo obiettivo è stato necessario eseguire il porting di tutt
 
 	Nel dettaglio mi sono occupato della ricerca sulle tecnologie da utilizzare, ho progettato l'infrastruttura applicativa ed ho attivamente sviluppato la parte server in Nodejs e gli applicativi mobile utilizzando React-Native.
 
-\section{Obiettivi}\vspace{5mm}
+\section*{Obiettivi}\vspace{5mm}
 
 	L’obiettivo di questa tesi è dimostrare che è possibile, per un prodotto completo di questo tipo, riscrivere la totalità degli applicativi che lo compongono in Javascript, assicurandosi un vantaggio sia dal punto di vista dei costi di gestione che dell’effettiva manutenibilità del progetto. Tutto ciò mantenendo le medesime funzionalità e senza alterare la qualità del prodotto. Inoltre sarà valutata l’efficacia di adottare uno stack Javascript soppesando i costi di sviluppo e il peso tecnologico.
 
-\section{Conclusioni}\vspace{5mm}
+\section*{Conclusioni}\vspace{5mm}
 
-Attraverso le tecnologie scelte, che verranno descritte approfonditamente nel secondo capitolo, è stato possibile riprodurre tutte le funzionalità della versione precedente, in quella full Javacript. Tale traguardo è stato possibile grazie al vastissimo ecosistema del linguaggio, che mette a disposizione tool e framework per creare applicativi ad ampio spettro: a partire dal lato server con Nodejs, alla parte mobile con React-Native. Questo tipo di approccio ha migliorato notevolmente l'esperienza di sviluppo, abbassando le barriere tecnologiche tra i vari applicativi che impediscono a sviluppatori frontend di approcciarsi al lato server e viceversa. Inoltre con questa soluzione è stato possibile rivalutare il concetto di riutilizzo del codice: ora è possibile condividere librerie in tutto lo spettro applicativo velocizzando ulteriormente la produzione software.
+Attraverso le tecnologie scelte, che verranno descritte approfonditamente nel secondo capitolo, è stato possibile riprodurre tutte le funzionalità della versione precedente, in quella full Javacript. Tale traguardo è stato possibile grazie al vastissimo ecosistema del linguaggio, che mette a disposizione tool e framework per creare applicativi ad ampio spettro: a partire dal lato server con Nodejs, alla parte mobile con React-Native. Questo tipo di approccio ha migliorato notevolmente l'esperienza di sviluppo, abbassando le barriere tecnologiche tra i vari applicativi che impediscono a sviluppatori frontend di approcciarsi al lato server e viceversa. Inoltre con questa soluzione è stato possibile rivalutare il concetto di riutilizzo del codice: ora è possibile condividere librerie in tutto lo spettro applicativo velocizzando ulteriormente la produzione software.\vspace{5mm}
+
+La nuova versione non è ancora sviluppato nella sua totalità, quindi non è ancora disponibile all'accesso. Tutte le immagini presenti in questa tesi sono state create utilizzando dati di test e hanno solo scopo espositivo.
 	
-\section{Struttura della tesi}\vspace{5mm}
+\section*{Struttura della tesi}\vspace{5mm}
 	
 Il capitolo 1 descrive nel dettaglio il progetto di Open Air Museum. Il capitolo 2 analizza le tecnologie impiegate nella prima versione dell'applicativo, e quelle disponibili attualmente sul mercato candidate a sostituirle. Il capitolo 3 presenta la nuova versione di Open Air Museum. Il capitolo 4 affronta la possibilità di espandere e migliorare ulteriormente il prodotto. Infine nel capitolo 5 viene eseguita un’analisi e una valutazione del lavoro svolto, con relative conclusioni. 
 
