@@ -11,7 +11,7 @@ Questo è possibile grazie a due componenti: la tecnologia iBeacon\cite{iBeacon}
 
 \section{iBeacon}\vspace{5mm}
 
-La modalità \emph{Esplora} citata nella sezione precedente è stata implementata sfruttando la tecnologia iBeacon basata su Bluetooth 4.0\cite{Bluetooth}. Essa permette al dispositivo di percepire l’ingresso in una specifica area, marcata da un piccolo radiofaro bluetooth, il quale è collegato a uno determinato punto di interesse dell'applicazione.\vspace{5mm}
+La modalità \emph{Esplora} citata nella sezione precedente è stata implementata sfruttando la tecnologia iBeacon basata su Bluetooth 4.0\cite{Bluetooth}. Essa permette al dispositivo di percepire l’ingresso in una specifica area, marcata da un piccolo radiofaro bluetooth, il quale è collegato a un determinato punto di interesse dell'applicazione.\vspace{5mm}
 
 \subsection{UUID, major e minor}\vspace{5mm}
 
@@ -23,7 +23,7 @@ Una \emph{Regione} può essere definita mediante i parametri identificativi dei 
 
 \subsection{Ranging e Proximity}\vspace{5mm}
 
-Esistono due diversi sistemi di approccio alla ricerca in una specifica regione. Il \emph{Ranging} fornisce un interfaccia per ottenere una lista ordinata di Beacon che si trovano nelle vicinanze del dispositivo. La lista è ordinata per distanza dallo smartphone: il Beacon più lontano si troverà nell'ultima posizione e quello più vicino nella prima. La ricerca tramite Proximity, invece, non fornisce informazioni sui Beacon specifici nelle vicinanze ma è utilizzata soltanto per identificare o meno l'ingresso in una regione.\vspace{5mm} 
+Esistono due diversi sistemi di approccio alla ricerca in una specifica regione. Il \emph{Ranging} fornisce un'interfaccia per ottenere una lista ordinata di Beacon che si trovano nelle vicinanze del dispositivo. La lista è ordinata per distanza dallo smartphone: il Beacon più lontano si troverà nell'ultima posizione e quello più vicino nella prima. La ricerca tramite Proximity, invece, non fornisce informazioni sui Beacon specifici nelle vicinanze ma è utilizzata soltanto per identificare o meno l'ingresso in una regione.\vspace{5mm} 
 
 Open Air museum utilizza solamente il primo parametro per identificare la regione di ricerca, quindi tutti i dispositivi Beacon sono impostati per utilizzare quello specifico UUID. Mentre per il protocollo di ricerca utilizza il Ranging perché permette un controllo più preciso sui dispositivi nelle vicinanze.
 
@@ -33,9 +33,9 @@ Open Air museum utilizza solamente il primo parametro per identificare la region
 	
 La visualizzazione dei punti avviene attraverso due schermate: la prima è una lista che mostra tutti i punti di interesse con la possibilità di entrare nel dettaglio e modificare le informazioni del punto selezionato e i contenuti multimediali associati ad esso; la seconda mostra l'elenco di tutti i percorsi disponibili e il dettaglio di ognuno di essi, contenente l'elenco dei punti da cui è composto e l'ordine di visita relativo. Per ogni testo vi è la possibilità di fornire una traduzione in tutte le lingue supportate dall'applicativo: italiano, tedesco, inglese, spagnolo e cinese semplificato.\vspace{5mm}
 
-Filemaker mette a disposizione un interfaccia drag and drop per la creazione della parte visuale dell'applicativo, permettendo di collegare i vari elementi trascinati nell'area di lavoro ad una specifica entry del database. Tale interfaccia viene quindi tenuta sempre in sincronia dal motore di Filemaker per riflettere i dati contenuti nel database: questo permette di avere un interfaccia facilmente modificabile e una raccolta dati consistente.\vspace{5mm}
+Filemaker mette a disposizione un'interfaccia drag and drop per la creazione della parte visuale dell'applicativo, permettendo di collegare i vari elementi trascinati nell'area di lavoro ad una specifica entry del database. Tale interfaccia viene quindi tenuta sempre in sincronia dal motore di Filemaker per riflettere i dati contenuti nel database: questo permette di avere un interfaccia facilmente modificabile e una raccolta dati consistente.\vspace{5mm}
 
-Il vantaggio principale dell'utilizzare questo genere di software si è trovato nella possibilità di convertirlo in una web application, con cui siamo stati in grado di fornire al Comune una piattaforma, senza particolari requisiti di utilizzo, per il caricamento dati. Tale scelta si è rivelata vincente vista la grande frammentazione dei dispositivi in uso negli uffici della suddetta P.A.
+Il vantaggio principale nell'utilizzare questo genere di software si è trovato nella possibilità di convertirlo in una web application, con cui siamo stati in grado di fornire al Comune una piattaforma, senza particolari requisiti di utilizzo, per il caricamento dati. Tale scelta si è rivelata vincente vista la grande frammentazione dei dispositivi in uso negli uffici della suddetta P.A.
 
 \section{Server}\vspace{5mm}
 	
@@ -57,7 +57,7 @@ Nel caso di Open Air Museum vengono utilizzati per validare l'autenticazione: fi
 
 \section{Modelli ER}\vspace{5mm}
 		
-	Il lato server utilizza come database relazionale MySql, che viene sfruttato attraverso un interfaccia Javascript che permette di connettersi al database creando query e inviandole mediante questa connessione. Tutto questo in modo asincrono. Lo schema relazionale per il lato server è presentato in figura 1.2.\vspace{5mm}
+	Il lato server utilizza come database relazionale MySql, che viene sfruttato attraverso un'interfaccia Javascript che permette di connettersi al database creando query e inviandole mediante questa connessione. Tutto questo in modo asincrono. Lo schema relazionale per il lato server è presentato in figura 1.2.\vspace{5mm}
 	
 	Per quanto riguarda le due applicazioni mobile, viene utilizzato sempre un database relazionale, ma sfruttando SqLite come tecnologia, che risulta essere più leggera e adatta a essere eseguita su dispositivi dalle prestazioni ridotte. La figura 1.3 mostra lo schema relazionale per il lato mobile.\vspace{5mm}
 
